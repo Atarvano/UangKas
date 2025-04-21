@@ -1,0 +1,20 @@
+.form-outline input {
+  border-radius: 10px;
+  padding: 10px;
+}
+.btn-info {
+  background-color: #17a2b8;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.btn-info:hover {
+  background-color: #138496;
+}
+.link-info {
+  color: #17a2b8;
+  text-decoration: none;
+}
+.link-info:hover {
+  text-decoration: underline;
+}
