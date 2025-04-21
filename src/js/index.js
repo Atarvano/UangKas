@@ -4,4 +4,5 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // Import Bootstrap JS
 import "bootstrap";
 
-import "./login.css";
+import "../css/index.css";
+import "../css/login.css";
