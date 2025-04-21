@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="shortcut icon" href="src/img/icon.png" type="image/x-icon" />
   </head>
   <body>
     <section class="vh-100">
@@ -11,7 +12,7 @@
         <div class="row">
           <!-- Left Section -->
           <div
-            class="col-sm-6 text-black d-flex flex-column justify-content-center bg-light"
+            class="col-sm-6 text-black d-flex flex-column justify-content-center bg-light mh-100"
           >
             <div class="px-5 ms-xl-4 d-flex justify-content-center">
               <img src="src/img/icon.png" class="w-25" alt="" />
@@ -20,7 +21,11 @@
             <div
               class="d-flex align-items-center justify-content-center px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5"
             >
-              <form style="width: 23rem">
+              <form
+                style="width: 23rem"
+                action="src/php/auth.php"
+                method="POST"
+              >
                 <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
                   Log in
                 </h3>
@@ -30,6 +35,7 @@
                   <input
                     type="email"
                     id="email"
+                    name="username"
                     class="form-control form-control-lg"
                     placeholder="Enter your email"
                     required
@@ -42,6 +48,7 @@
                   <input
                     type="password"
                     id="password"
+                    name="password"
                     class="form-control form-control-lg"
                     placeholder="Enter your password"
                     required
