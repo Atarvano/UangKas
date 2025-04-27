@@ -5,7 +5,7 @@ include 'conn.php';
 $username = mysqli_real_escape_string($conn, $_POST['username']);
 $password = $_POST['password'];
 
-// Query untuk cek user
+
 $sql = "
     (SELECT 'guru' AS role, id_guru AS id_user, g.nama, g.username, g.password, k.id_kelas, k.nama_kelas
      FROM guru g
