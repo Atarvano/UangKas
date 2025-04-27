@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "dev": "webpack --mode development"
+    "dev": "webpack --mode development --watch"
   },
   "keywords": [],
   "author": "",
