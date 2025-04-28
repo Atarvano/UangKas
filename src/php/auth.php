@@ -39,18 +39,10 @@ if ($row = mysqli_fetch_assoc($result)) {
             'id_kelas' => $row['id_kelas'],
             'nama_kelas' => $row['nama_kelas']
         ];
-        echo "<p style='color:green;'>Login berhasil!</p>";
-        echo "<p>Selamat datang, " . htmlspecialchars($row['nama']) . "!</p>";
-
-        echo "role: " . htmlspecialchars($row['role']) . "<br>";
-
-        echo "id_kelas: " . htmlspecialchars($row['id_kelas']) . "<br>";
-        echo "nama_kelas: " . htmlspecialchars($row['nama_kelas']) . "<br>";
+        header("Location: ../../dashboard/index.php");
         exit();
     }
+} else {
+    header("Location: ../../login.html");
 }
-
-// Jika gagal login
-echo "<p style='color:red;'>Login gagal: username/password tidak cocok.</p>";
-echo "<p><a href='login.html'>&laquo; Kembali ke Login</a></p>";
 ?>
