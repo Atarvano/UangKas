@@ -282,7 +282,7 @@
           class="d-flex flex-column flex-md-row align-items-center align-items-md-left text-body"
         >
           <div class="copyright text-center mb-2 mb-md-0">
-            &copy; 2025
+            &copy; <span id="tahun"></span>
             <a href="" target="_blank" class="fw-bolder">Uangkas</a>. All rights
             reserved.
           </div>
@@ -294,5 +294,11 @@
     </footer>
 
     <script src="src/js/bundle.js"></script>
+    <script>
+      let tahun = document.querySelector("#tahun");
+      let year = new Date();
+
+      tahun.innerHTML = year.getFullYear();
+    </script>
   </body>
 </html>
