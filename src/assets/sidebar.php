@@ -2,7 +2,14 @@
 <script src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/static/js/components/dark.js"></script>
 <script
     src="https://cdn.jsdelivr.net/gh/zuramai/mazer@docs/demo/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/static/js/components/dark.js"></script>
+<script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
+<script src="assets/compiled/js/app.js"></script>
+
+<script src="assets/extensions/jquery/jquery.min.js"></script>
+<script src="assets/extensions/parsleyjs/parsley.min.js"></script>
+<script src="assets/static/js/pages/parsley.js"></script>
 <div id="sidebar">
     <div class="sidebar-wrapper active">
         <div class="sidebar-header position-relative">

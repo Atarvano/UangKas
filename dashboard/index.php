@@ -20,6 +20,9 @@
 
     <div class="page-heading">
       <h3>Class Statistics</h3>
+      <div>
+        
+      </div>
     </div>
     <div class="card mt-4">
       <div class="card-body py-4 px-4 d-flex justify-content-between align-items-center">
