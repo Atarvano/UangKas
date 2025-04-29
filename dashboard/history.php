@@ -19,8 +19,18 @@
         </header>
 
         <div class="page-heading">
-            <h3>Statistics</h3>
+            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="index.html">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        History
+                    </li>
+                </ol>
+            </nav>
         </div>
+
         <div class="card mt-4">
             <div class="card-body py-4 px-4 d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center mb-3">
@@ -37,14 +47,14 @@
         </div>
         <div class="page-content">
             <section class="row">
-                <div class="col-12">
+                <div class="col-17">
                     <div class="card">
                         <div class="card-header">
                             <h4>History</h4>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover table-lg">
+                                <table class="table table-hover table-sm">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
@@ -65,7 +75,7 @@
                                             </td>
                                             <td class="col-3">27-10-2007</td>
                                             <td class="col-2">5K</td>
-                                            <td class="col-2 d-flex gap-2">
+                                            <td class="col-auto d-flex  gap-2">
                                                 <p class="mb-0">
                                                     <a href="#" class="btn btn-primary">Delete</a>
                                                 </p>
