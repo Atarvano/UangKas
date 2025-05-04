@@ -9,17 +9,17 @@ $password = $_POST['password'];
 $sql = "
     (SELECT 'guru' AS role, id_guru AS id_user, g.nama, g.username, g.password, k.id_kelas, k.nama_kelas
      FROM guru g
-     LEFT JOIN kelas k ON k.wali_kelas = g.id_guru
+     INNER JOIN kelas k ON k.wali_kelas = g.id_guru
      WHERE g.username = ?)
     UNION
     (SELECT 'siswa', id_siswa, s.nama, s.username, s.password, s.kelas, k.nama_kelas
      FROM siswa s
-     LEFT JOIN kelas k ON k.id_kelas = s.kelas
+     INNER JOIN kelas k ON k.id_kelas =  s.kelas
      WHERE s.username = ?)
     UNION
     (SELECT 'bendahara', id_bendahara, b.nama, b.username, b.password, b.id_kelas, k.nama_kelas
      FROM bendahara b
-     LEFT JOIN kelas k ON k.id_kelas = b.id_kelas
+     INNER JOIN kelas k ON k.id_kelas = b.id_kelas
      WHERE b.username = ?)
     LIMIT 1
 ";
@@ -31,7 +31,6 @@ $result = mysqli_stmt_get_result($stmt);
 
 if ($row = mysqli_fetch_assoc($result)) {
     if ($password === $row['password']) {
-        // Set session
         $_SESSION = [
             'role' => $row['role'],
             'id_user' => $row['id_user'],
@@ -43,6 +42,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         exit();
     }
 } else {
+    echo "<script>alert('Username atau Password salah!');</script>";
     header("Location: ../../login.html");
 }
+
 ?>

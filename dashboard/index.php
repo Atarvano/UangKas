@@ -1,3 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['role'])) {
+  header("Location: ../login.html");
+  exit();
+}
+$role = $_SESSION['role'];
+$kelas = $_SESSION['nama_kelas'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,14 +31,14 @@
     <div class="page-heading">
       <h3>Class Statistics</h3>
       <div>
-        
+
       </div>
     </div>
     <div class="card mt-4">
       <div class="card-body py-4 px-4 d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center mb-3">
           <div class="avatar avatar-xl">
-            <img src="./assets/compiled/jpg/1.jpg" alt="Face 1" />
+            <img src="../src/img/yoonaa.jpeg" alt="Face 1 " class="img-fluid" />
           </div>
           <div class="ms-3 name">
             <h5 class="font-bold">Atarvano</h5>
@@ -43,7 +53,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>XI PPLG 1</h4>
+              <h4><?= $kelas ?></h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -55,21 +65,24 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="col-5">
-                        <div class="d-flex align-items-center">
-                          <div class="avatar avatar-md">
-                            <img src="./assets/compiled/jpg/5.jpg" />
-                          </div>
-                          <p class="font-bold ms-3 mb-0">Irvani Heldy Fauzan</p>
-                        </div>
-                      </td>
-                      <td class="col-3">
-                        <p class="mb-0">
-                          <a href="history.php" class="btn btn-primary">History</a>
-                        </p>
-                      </td>
-                    </tr>
+                    <?php
+                    include '../src/php/conn.php';
+                    $sql = "SELECT * FROM siswa WHERE kelas = (SELECT id_kelas FROM kelas WHERE nama_kelas = '$kelas')";
+                    $result = mysqli_query($conn, $sql);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                      <tr>
+                        <td class="col-5">
+                          <p class="font-bold mb-0"><?= $row['nama'] ?></p>
+                        </td>
+                        <td class="col-3">
+                          <p class="mb-0">
+                            <a href="history.php?id=<?= $row['id_siswa'] ?>" class="btn btn-primary">History</a>
+                          </p>
+                        </td>
+
+                      </tr>
+                    <?php } ?>
 
                   </tbody>
                 </table>
