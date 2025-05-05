@@ -23,14 +23,9 @@
             <div class="page-heading">
                 <div class="page-title">
                     <div class="row">
-                        <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Form Validation</h3>
-                            <p class="text-subtitle text-muted">
-                                Complete the form with powerful validation library such as
-                                Parsley.
-                            </p>
+                        <div class="c>
                         </div>
-                        <div class="col-12 col-md-6 order-md-2 order-first">
+                        <div class=" col-12 col-md-6 order-md-2 order-first">
                             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
@@ -58,36 +53,39 @@
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form" data-parsley-validate>
+                                        <form class="form" action="insert.php" method="POST" data-parsley-validate>
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="date-column" class="form-label">Tanggal</label>
-                                                        <input type="date" class="form-control flatpickr-always-open"
-                                                            id="date-column" placeholder="Select date.."
-                                                            name="date-column" data-parsley-required="true" />
+                                                        <label for="nama-column" class="form-label">Nama</label>
+                                                        <input type="text" id="nama-column" class="form-control"
+                                                            placeholder="Nama" name="nama-column"
+                                                            data-parsley-required="true" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="last-name-column" class="form-label">Bayar</label>
-                                                        <input type="number" id="last-name-column" class="form-control"
-                                                            placeholder="Last Name" name="lname-column"
+                                                        <label for="date-column" class="form-label">Date</label>
+                                                        <input type="date" id="date-column" class="form-control"
+                                                            placeholder="Select date.." name="date-column"
                                                             data-parsley-required="true" />
                                                     </div>
                                                 </div>
-
-                                                <div class="col-12">
+                                                <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <div class="form-check mandatory">
-                                                            <input type="checkbox" id="checkbox5"
-                                                                class="form-check-input" checked
-                                                                data-parsley-required="true"
-                                                                data-parsley-error-message="You have to accept our terms and conditions to proceed." />
-                                                            <label for="checkbox5"
-                                                                class="form-check-label form-label">DIcek baik
-                                                                baik.</label>
-                                                        </div>
+                                                        <label for="dibayar-column" class="form-label">Dibayar</label>
+                                                        <input type="number" id="dibayar-column" class="form-control"
+                                                            placeholder="Jumlah Dibayar" name="dibayar-column"
+                                                            data-parsley-required="true" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="bendahara-column"
+                                                            class="form-label">Bendahara</label>
+                                                        <input type="text" id="bendahara-column" class="form-control"
+                                                            placeholder="Nama Bendahara" name="bendahara-column"
+                                                            data-parsley-required="true" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,7 +107,7 @@
                         </div>
                     </div>
                 </section>
-                <!-- // Basic multiple Column Form section end -->
+
             </div>
 
 

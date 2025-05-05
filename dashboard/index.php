@@ -1,11 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['role'])) {
+
+$role = $_SESSION['role'];
+if (!isset($role)) {
   header("Location: ../login.html");
   exit();
 }
-$role = $_SESSION['role'];
+
+if ($role == 'siswa') {
+  header("Location: ../error403.html");
+  exit();
+}
 $kelas = $_SESSION['nama_kelas'];
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +48,7 @@ $kelas = $_SESSION['nama_kelas'];
             <img src="../src/img/yoonaa.jpeg" alt="Face 1 " class="img-fluid" />
           </div>
           <div class="ms-3 name">
-            <h5 class="font-bold">Atarvano</h5>
+            <h5 class="font-bold"></h5>
             <h6 class="text-muted mb-0">Bendahara</h6>
           </div>
         </div>

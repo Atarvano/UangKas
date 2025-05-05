@@ -1,3 +1,16 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../error403.html");
+    exit();
+}
+
+$nama = $_SESSION['nama'];
+$role = $_SESSION['role'];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,11 +51,10 @@
                         <img src="./assets/compiled/jpg/1.jpg" alt="Face 1" />
                     </div>
                     <div class="ms-3 name">
-                        <h5 class="font-bold">Atarvano</h5>
-                        <h6 class="text-muted mb-0">Bendahara</h6>
+                        <h5 class="font-bold"><?= htmlspecialchars($nama); ?></h5>
+                        <h6 class="text-muted mb-0"><?= htmlspecialchars($role); ?></h6>
                     </div>
                 </div>
-                <a href="" class="btn btn-primary p-3">Create</a>
             </div>
         </div>
         <div class="page-content">
@@ -57,34 +69,54 @@
                                 <table class="table table-hover table-sm">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
+                                            <th>Nama</th>
                                             <th>Date</th>
                                             <th>Dibayar</th>
-                                            <th>Action</th>
+                                            <th>Bendahara</th>
+
+                                            <?php if ($_SESSION['role'] == 'bendahara') { ?>
+                                                <th>Action</th>
+                                            <?php } ?>
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="col-6">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="avatar avatar-md">
-                                                        <img src="./assets/compiled/jpg/5.jpg" />
-                                                    </div>
-                                                    <p class="font-bold ms-3 mb-0">Irvani Heldy Fauzan</p>
-                                                </div>
-                                            </td>
-                                            <td class="col-3">27-10-2007</td>
-                                            <td class="col-2">5K</td>
-                                            <td class="col-auto d-flex  gap-2">
-                                                <p class="mb-0">
-                                                    <a href="#" class="btn btn-primary">Delete</a>
-                                                </p>
-                                                <p>
+                                        <?php
+                                        include '../src/php/conn.php';
+                                        if (isset($_SESSION['role']) == 'siswa') {
+                                            $id = $_SESSION['id_user'];
+                                            ;
+                                        } else {
+                                            $id = $_GET['id'];
+                                        }
+                                        $kelas = $_SESSION['nama_kelas'];
 
-                                                    <a href="#" class="btn btn-danger">Update</a>
-                                                </p>
-                                            </td>
-                                        </tr>
+                                        $sql = "SELECT ukk.*, s.nama, b.nama AS bendahara 
+                                                FROM uang_kas_kelas AS ukk
+                                                JOIN siswa AS s ON ukk.id_siswa = s.id_siswa 
+                                                JOIN kelas AS k ON s.kelas = k.id_kelas 
+                                                JOIN bendahara AS b ON ukk.id_bendahara = b.id_bendahara
+                                                WHERE ukk.id_siswa = '$id' AND k.nama_kelas = '$kelas'";
+                                        $result = mysqli_query($conn, $sql);
+
+                                        while ($row = mysqli_fetch_assoc($result)) { ?>
+                                            <tr>
+                                                <td class="col-5">
+                                                    <p class="font-bold mb-0"><?= htmlspecialchars($row['nama']); ?></p>
+                                                </td>
+                                                <td class="col-3"><?= htmlspecialchars($row['tanggal']); ?></td>
+                                                <td class="col-2"><?= htmlspecialchars($row['jumlah']); ?></td>
+                                                <td class="col-3"><?= htmlspecialchars($row['bendahara']); ?></td>
+                                                <?php if ($_SESSION['role'] == 'bendahara') { ?>
+                                                    <td class="col-auto d-flex gap-2">
+                                                        <a href="delete.php?id=<?= $row['id_transaksi']; ?>"
+                                                            class="btn btn-primary">Delete</a>
+                                                        <a href="update.php?id=<?= $row['id_transaksi']; ?>"
+                                                            class="btn btn-danger">Update</a>
+                                                    </td>
+                                                <?php } ?>
+                                            </tr>
+                                        <?php } ?>
 
                                     </tbody>
                                 </table>
