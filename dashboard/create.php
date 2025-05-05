@@ -1,3 +1,16 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['role'])) {
+    header("Location: ../error403.html");
+    exit();
+}
+
+$nama = $_SESSION['nama'];
+$role = $_SESSION['role'];
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

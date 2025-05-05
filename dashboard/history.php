@@ -8,6 +8,12 @@ if (!isset($_SESSION['role'])) {
 
 $nama = $_SESSION['nama'];
 $role = $_SESSION['role'];
+
+if (isset($role) && $role === 'siswa') {
+    $id = $_SESSION['id_user'];
+} else {
+    $id = $_GET['id'];
+}
 ?>
 
 
@@ -61,8 +67,13 @@ $role = $_SESSION['role'];
             <section class="row">
                 <div class="col-17">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex justify-content-between align-items-center">
                             <h4>History</h4>
+                            <?php if ($_SESSION['role'] == 'bendahara') { ?>
+
+                                <a href="create.php?id=<?= $id ?>" class="btn btn-success">Create</a>
+                            <?php } ?>
+
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -83,12 +94,8 @@ $role = $_SESSION['role'];
                                     <tbody>
                                         <?php
                                         include '../src/php/conn.php';
-                                        if (isset($_SESSION['role']) == 'siswa') {
-                                            $id = $_SESSION['id_user'];
-                                            ;
-                                        } else {
-                                            $id = $_GET['id'];
-                                        }
+
+
                                         $kelas = $_SESSION['nama_kelas'];
 
                                         $sql = "SELECT ukk.*, s.nama, b.nama AS bendahara 

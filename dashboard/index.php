@@ -2,8 +2,9 @@
 session_start();
 
 $role = $_SESSION['role'];
+
 if (!isset($role)) {
-  header("Location: ../login.html");
+  header("Location: ../error403.html");
   exit();
 }
 

@@ -1,10 +1,12 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <?php
 session_start();
 include 'conn.php';
 
 $username = mysqli_real_escape_string($conn, $_POST['username']);
 $password = $_POST['password'];
-
+$errorMessage = 'Username atau password salah';
 
 $sql = "
     (SELECT 'guru' AS role, id_guru AS id_user, g.nama, g.username, g.password, k.id_kelas, k.nama_kelas
@@ -14,7 +16,7 @@ $sql = "
     UNION
     (SELECT 'siswa', id_siswa, s.nama, s.username, s.password, s.kelas, k.nama_kelas
      FROM siswa s
-     INNER JOIN kelas k ON k.id_kelas =  s.kelas
+     INNER JOIN kelas k ON k.id_kelas = s.kelas
      WHERE s.username = ?)
     UNION
     (SELECT 'bendahara', id_bendahara, b.nama, b.username, b.password, b.id_kelas, k.nama_kelas
@@ -38,16 +40,15 @@ if ($row = mysqli_fetch_assoc($result)) {
             'id_kelas' => $row['id_kelas'],
             'nama_kelas' => $row['nama_kelas']
         ];
-
-        if ($row['role'] == 'siswa') {
+        if ($row['role'] === 'siswa') {
             header("Location: ../../dashboard/history.php");
         } else {
             header("Location: ../../dashboard/index.php");
         }
+        exit;
     }
-} else {
-    echo "<script>alert('Username atau Password salah!');</script>";
-    header("Location: ../../login.html");
 }
 
+header("Location: ../../login.php?pesan=gagal");
+exit;
 ?>

@@ -51,9 +51,8 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li class="sidebar-title">Menu</li>
 
-                <?php if (!($_SESSION['role']) == 'siswa') { ?>
+                <?php if (($_SESSION['role']) != 'siswa') { ?>
                     <li class="sidebar-item active">
                         <a href="index.php" class="sidebar-link">
                             <i class="bi bi-grid-fill"></i>
