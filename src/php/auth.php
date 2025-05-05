@@ -38,8 +38,12 @@ if ($row = mysqli_fetch_assoc($result)) {
             'id_kelas' => $row['id_kelas'],
             'nama_kelas' => $row['nama_kelas']
         ];
-        header("Location: ../../dashboard/index.php");
-        exit();
+
+        if ($row['role'] == 'siswa') {
+            header("Location: ../../dashboard/history.php");
+        } else {
+            header("Location: ../../dashboard/index.php");
+        }
     }
 } else {
     echo "<script>alert('Username atau Password salah!');</script>";
