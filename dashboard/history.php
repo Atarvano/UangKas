@@ -97,13 +97,13 @@ if (isset($role) && $role === 'siswa') {
 
 
                                         $kelas = $_SESSION['nama_kelas'];
-
                                         $sql = "SELECT ukk.*, s.nama, b.nama AS bendahara 
                                                 FROM uang_kas_kelas AS ukk
                                                 JOIN siswa AS s ON ukk.id_siswa = s.id_siswa 
                                                 JOIN kelas AS k ON s.kelas = k.id_kelas 
                                                 JOIN bendahara AS b ON ukk.id_bendahara = b.id_bendahara
-                                                WHERE ukk.id_siswa = '$id' AND k.nama_kelas = '$kelas'";
+                                                WHERE ukk.id_siswa = '$id' AND k.nama_kelas = '$kelas'
+                                                ORDER BY ukk.tanggal DESC";
                                         $result = mysqli_query($conn, $sql);
 
                                         while ($row = mysqli_fetch_assoc($result)) { ?>

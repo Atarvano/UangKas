@@ -12,6 +12,8 @@ if ($role == 'siswa') {
   header("Location: ../error403.html");
   exit();
 }
+
+$nama = $_SESSION['nama'];
 $kelas = $_SESSION['nama_kelas'];
 
 ?>
@@ -49,8 +51,8 @@ $kelas = $_SESSION['nama_kelas'];
             <img src="../src/img/yoonaa.jpeg" alt="Face 1 " class="img-fluid" />
           </div>
           <div class="ms-3 name">
-            <h5 class="font-bold"></h5>
-            <h6 class="text-muted mb-0">Bendahara</h6>
+            <h5 class="font-bold"><?= $nama ?> </h5>
+            <h6 class="text-muted mb-0"><?= $role ?></h6>
           </div>
         </div>
 
