@@ -1,8 +1,3 @@
-<?php
-session_start();
-$errorMessage = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : '';
-unset($_SESSION['error_message']);
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,20 +57,19 @@ unset($_SESSION['error_message']);
     </div>
   </section>
 
-  <!-- SweetAlert for Error Message -->
-  <?php if (!empty($errorMessage)): ?>
+  <?php if (isset($_GET['pesan']) && $_GET['pesan'] === 'gagal'): ?>
     <script>
       Swal.fire({
         icon: 'error',
         title: 'Login Gagal',
-        text: '<?php echo $errorMessage; ?>',
-        confirmButtonText: 'OK'
+        text: 'Username atau password yang Anda masukkan salah.',
+        confirmButtonText: 'Coba Lagi'
       });
     </script>
   <?php endif; ?>
 
   <!-- Scripts -->
-  <script src="src/js/bundle.js"></script>
+  <script type="module" src="src/js/bundle.js"></script>
 </body>
 
 </html>
