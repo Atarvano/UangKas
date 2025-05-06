@@ -1,19 +1,28 @@
 <?php
 
 session_start();
-if (!isset($_SESSION['role'])) {
+
+
+if (!($_SESSION['role'])) {
     header("Location: ../error403.html");
     exit();
 }
 
-$nama = $_SESSION['nama'];
 $role = $_SESSION['role'];
+$nama = $_SESSION['nama'] ?? '';
 
-if (isset($role) && $role === 'siswa') {
+if ($role === 'siswa') {
+
+    if (empty($_SESSION['id_user'])) {
+        header("Location: ../error403.html");
+        exit();
+    }
     $id = $_SESSION['id_user'];
-} else {
+
+} else if ($role === 'bendahara' || $role === 'guru') {
     $id = $_GET['id'];
 }
+
 ?>
 
 
@@ -97,13 +106,9 @@ if (isset($role) && $role === 'siswa') {
 
 
                                         $kelas = $_SESSION['nama_kelas'];
-                                        $sql = "SELECT ukk.*, s.nama, b.nama AS bendahara 
-                                                FROM uang_kas_kelas AS ukk
-                                                JOIN siswa AS s ON ukk.id_siswa = s.id_siswa 
-                                                JOIN kelas AS k ON s.kelas = k.id_kelas 
-                                                JOIN bendahara AS b ON ukk.id_bendahara = b.id_bendahara
-                                                WHERE ukk.id_siswa = '$id' AND k.nama_kelas = '$kelas'
-                                                ORDER BY ukk.tanggal DESC";
+                                        $sql = "
+                                            call gethistory('$id', '$kelas')
+                                        ";
                                         $result = mysqli_query($conn, $sql);
 
                                         while ($row = mysqli_fetch_assoc($result)) { ?>
@@ -112,9 +117,12 @@ if (isset($role) && $role === 'siswa') {
                                                     <p class="font-bold mb-0"><?= htmlspecialchars($row['nama']); ?></p>
                                                 </td>
                                                 <td class="col-3"><?= htmlspecialchars($row['tanggal']); ?></td>
-                                                <td class="col-2"><?= htmlspecialchars($row['jumlah']); ?></td>
+                                                <td class="col-2">Rp <?= number_format($row['jumlah'], 0, ); ?></td>
                                                 <td class="col-3"><?= htmlspecialchars($row['bendahara']); ?></td>
-                                                <?php if ($_SESSION['role'] == 'bendahara') { ?>
+                                                <?php if (
+                                                    $_SESSION['role'] === 'bendahara'
+                                                    && $row['id_kelas'] == $_SESSION['id_kelas']
+                                                ) { ?>
                                                     <td class="col-auto d-flex gap-2">
                                                         <a href="delete.php?id=<?= $row['id_transaksi']; ?>"
                                                             class="btn btn-primary">Delete</a>

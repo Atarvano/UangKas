@@ -1,13 +1,35 @@
 <?php
 
 session_start();
-if (!isset($_SESSION['role'])) {
+if (isset($_SESSION['role']) != 'bendahara') {
     header("Location: ../error403.html");
     exit();
 }
 
-$nama = $_SESSION['nama'];
-$role = $_SESSION['role'];
+
+$id_siswa = $_GET['id'];
+if (!isset($_GET['id'])) {
+    header("Location: index.php");
+    exit();
+}
+
+include '../src/php/conn.php';
+
+$id_siswa = $_GET['id'];
+
+$query = "
+    SELECT k.id_kelas 
+    FROM siswa s
+    JOIN kelas k ON s.kelas = k.id_kelas
+    WHERE s.id_siswa = $id_siswa AND k.id_kelas = " . $_SESSION['id_kelas'];
+
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
+
+$is_forbidden = (!$row || $row['id_kelas'] != $_SESSION['id_kelas']);
+
+
+
 
 
 ?>
@@ -17,15 +39,17 @@ $role = $_SESSION['role'];
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form Validation - Mazer Admin Dashboard</title>
+    <title>Form Create</title>
 
     <link rel="shortcut icon" href="../src/img/icon.png" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<>
+
+<body>
     <?php include '../src/assets/sidebar.php'; ?>
     <div id="app">
-
+        <?php include '../src/assets/createalert.php'; ?>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -56,7 +80,7 @@ $role = $_SESSION['role'];
                     </div>
                 </div>
 
-                <!-- // Basic multiple Column Form section start -->
+
                 <section id="multiple-column-form">
                     <div class="row match-height">
                         <div class="col-12">
@@ -66,22 +90,15 @@ $role = $_SESSION['role'];
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form" action="insert.php" method="POST" data-parsley-validate>
+                                        <form class="form" action="../src/php/insert.php?id=<?= $id_siswa ?>"
+                                            method="POST" data-parsley-validate>
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="nama-column" class="form-label">Nama</label>
-                                                        <input type="text" id="nama-column" class="form-control"
-                                                            placeholder="Nama" name="nama-column"
-                                                            data-parsley-required="true" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
                                                         <label for="date-column" class="form-label">Date</label>
-                                                        <input type="date" id="date-column" class="form-control"
-                                                            placeholder="Select date.." name="date-column"
-                                                            data-parsley-required="true" />
+                                                        <input type="date" id="date-column" value="<?= date('Y-m-d') ?>"
+                                                            class="form-control" placeholder="Select date.."
+                                                            name="date-column" required data-parsley-required="true" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
@@ -89,15 +106,6 @@ $role = $_SESSION['role'];
                                                         <label for="dibayar-column" class="form-label">Dibayar</label>
                                                         <input type="number" id="dibayar-column" class="form-control"
                                                             placeholder="Jumlah Dibayar" name="dibayar-column"
-                                                            data-parsley-required="true" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label for="bendahara-column"
-                                                            class="form-label">Bendahara</label>
-                                                        <input type="text" id="bendahara-column" class="form-control"
-                                                            placeholder="Nama Bendahara" name="bendahara-column"
                                                             data-parsley-required="true" />
                                                     </div>
                                                 </div>
@@ -109,7 +117,7 @@ $role = $_SESSION['role'];
                                                         Submit
                                                     </button>
                                                     <button type="reset" class="btn btn-light-secondary me-1 mb-1">
-                                                        Reset
+                                                        <a href="index.php">Back</a>
                                                     </button>
                                                 </div>
                                             </div>
@@ -127,6 +135,6 @@ $role = $_SESSION['role'];
         </div>
     </div>
     <script src="../src/js/bundle.js"></script>
-    </body>
+</body>
 
 </html>

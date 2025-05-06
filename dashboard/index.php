@@ -27,6 +27,7 @@ $kelas = $_SESSION['nama_kelas'];
   <title>Dashboard</title>
 
   <link rel="shortcut icon" href="../src/img/icon.png" type="image/x-icon" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -105,6 +106,7 @@ $kelas = $_SESSION['nama_kelas'];
   </div>
 
 
+  <?php include '../src/assets/success.php'; ?>
   <script src="../src/js/bundle.js"></script>
 </body>
 
