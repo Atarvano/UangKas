@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $bendahara = $_SESSION['id_user'];
     $idkelas = $_SESSION['id_kelas'];
 
-    $sql = "call postuangkas($id, '$tanggal', $jumlah, $bendahara, $idkelas)";
+    $sql = "call postuangkas(" . intval($id) . ", '" . mysqli_real_escape_string($conn, $tanggal) . "', " . floatval($jumlah) . ", " . intval($bendahara) . ", " . intval($idkelas) . ")";
     $result = mysqli_query($conn, $sql);
 
     if ($result) {

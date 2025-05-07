@@ -124,7 +124,7 @@ if ($role === 'siswa') {
                                                     && $row['id_kelas'] == $_SESSION['id_kelas']
                                                 ) { ?>
                                                     <td class="col-auto d-flex gap-2">
-                                                        <a href="delete.php?id=<?= $row['id_transaksi']; ?>"
+                                                        <a href="../src/php/delete.php?id=<?= $row['id_transaksi']; ?>"
                                                             class="btn btn-primary">Delete</a>
                                                         <a href="update.php?id=<?= $row['id_transaksi']; ?>"
                                                             class="btn btn-danger">Update</a>

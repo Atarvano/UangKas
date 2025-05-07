@@ -1,39 +1,27 @@
 <?php
-
-session_start();
-if (isset($_SESSION['role']) != 'bendahara') {
-    header("Location: ../error403.html");
-    exit();
-}
-
-
-$id_siswa = $_GET['id'];
-if (!isset($_GET['id'])) {
-    header("Location: index.php");
-    exit();
-}
-
 include '../src/php/conn.php';
+session_start();
 
-$id_siswa = $_GET['id'];
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'bendahara') {
+    header('Location: ../error403.html');
+    exit;
+}
+$idkelas = $_SESSION['id_kelas'];
+$id = $_GET['id'];
 
-$query = "
-    SELECT s.*, k.id_kelas 
-    FROM siswa s
-    JOIN kelas k ON s.kelas = k.id_kelas
-    WHERE s.id_siswa = $id_siswa AND k.id_kelas = " . $_SESSION['id_kelas'];
 
+$sql = "SELECT * FROM uang_kas_kelas 
+        WHERE id_transaksi = $id AND id_kelas = $idkelas";
+$result = mysqli_query($conn, $sql);
 
-$result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
+if (!$row) {
+    header("Location: index.php?message=error");
 
-$is_forbidden = (!$row || $row['id_kelas'] != $_SESSION['id_kelas']);
-
-
-
-
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,7 +38,6 @@ $is_forbidden = (!$row || $row['id_kelas'] != $_SESSION['id_kelas']);
 <body>
     <?php include '../src/assets/sidebar.php'; ?>
     <div id="app">
-        <?php include '../src/assets/createalert.php'; ?>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -73,7 +60,7 @@ $is_forbidden = (!$row || $row['id_kelas'] != $_SESSION['id_kelas']);
                                         History
                                     </li>
                                     <li class="breadcrumb-item active" aria-current="page">
-                                        Create
+                                        Update
                                     </li>
                                 </ol>
                             </nav>
@@ -91,23 +78,25 @@ $is_forbidden = (!$row || $row['id_kelas'] != $_SESSION['id_kelas']);
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <form class="form" action="../src/php/insert.php?id=<?= $id_siswa ?>"
-                                            method="POST" data-parsley-validate>
+                                        <form class="form" action="../src/php/update.php?id=<?= $id ?>" method="POST"
+                                            data-parsley-validate>
                                             <div class="row">
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="date-column" class="form-label">Date</label>
-                                                        <input type="date" id="date-column" value="<?= date('Y-m-d') ?>"
-                                                            class="form-control" placeholder="Select date.."
-                                                            name="date-column" required data-parsley-required="true" />
+                                                        <input type="date" id="date-column"
+                                                            value="<?= $row['tanggal'] ?>" class="form-control"
+                                                            placeholder="Select date.." name="date-column" required
+                                                            data-parsley-required="true" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label for="dibayar-column" class="form-label">Dibayar</label>
                                                         <input type="number" id="dibayar-column" class="form-control"
-                                                            placeholder="Jumlah Dibayar" required name="dibayar-column"
-                                                            data-parsley-required="true" />
+                                                            placeholder="Jumlah Dibayar" value="<?= $row['jumlah'] ?>"
+                                                            name="dibayar-column" data-parsley-required="true"
+                                                            required />
                                                     </div>
                                                 </div>
                                             </div>
