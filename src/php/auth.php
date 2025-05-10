@@ -9,9 +9,9 @@ $password = $_POST['password'];
 $errorMessage = 'Username atau password salah';
 
 $sql = "
-    (SELECT 'guru' AS role, id_guru AS id_user, g.nama, g.username, g.password, k.id_kelas, k.nama_kelas
+    (SELECT 'guru' AS role, id_guru AS id_user, g.nama, g.username, g.password, g.id_kelas, k.nama_kelas
      FROM guru g
-     INNER JOIN kelas k ON k.wali_kelas = g.id_guru
+     INNER JOIN kelas k ON k.id_kelas = g.id_kelas
      WHERE g.username = ?)
     UNION
     (SELECT 'siswa', id_siswa, s.nama, s.username, s.password, s.kelas, k.nama_kelas

@@ -9,10 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Error: Missing student ID.");
     }
 
-    $tanggal = $_POST['date-column'];
-    $jumlah = $_POST['dibayar-column'];
-
-
+    $tanggal = htmlspecialchars($_POST['date-column']);
+    $jumlah = htmlspecialchars($_POST['dibayar-column']);
 
     $bendahara = $_SESSION['id_user'];
     $idkelas = $_SESSION['id_kelas'];
@@ -22,9 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result) {
         header("Location: ../../dashboard/index.php?message=success");
-
     } else {
         header("Location: ../dashboard/index.php?message=success");
-
     }
 }
