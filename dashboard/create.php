@@ -55,11 +55,11 @@ if (($_SESSION['role']) === 'bendahara') {
         include '../src/assets/createhistory.php';
     } elseif (
         $_SESSION['role'] === 'admin'
-        && $_GET['create'] === 'kelas'
+        && !isset($_GET['create'])
     ) {
-        include '../src/assets/createkelas.php';
-    } elseif ($_SESSION['role'] === 'admin') {
         include '../src/assets/createusers.php';
+    } elseif ($_SESSION['role'] === 'admin' && isset($_GET['create'])) {
+        include '../src/assets/createkelas.php';
     }
     ?>
 

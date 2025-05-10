@@ -30,13 +30,13 @@ if ($_SESSION['role'] === 'admin' && !isset($_GET['kelas'])) {
     $id = $_GET['id'];
     switch ($role) {
         case 'siswa':
-            $sql = "SELECT * FROM siswa WHERE id_siswa = $iduser";
+            $sql = "SELECT * FROM siswa WHERE id_siswa = $id";
             break;
         case 'guru':
-            $sql = "SELECT * FROM guru WHERE id_guru = $iduser";
+            $sql = "SELECT * FROM guru WHERE id_guru = $id";
             break;
         case 'bendahara':
-            $sql = "SELECT * FROM bendahara WHERE id_bendahara = $iduser";
+            $sql = "SELECT * FROM bendahara WHERE id_bendahara = $id";
             break;
     }
 
