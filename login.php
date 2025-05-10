@@ -3,6 +3,8 @@ session_start();
 if (isset($_SESSION['role'])) {
   if ($_SESSION['role'] === 'siswa') {
     header("Location: dashboard/history.php");
+  } elseif ($_SESSION['role'] === 'admin') {
+    header("Location: dashboard/admin.php");
   } else {
     header("Location: dashboard/index.php");
   }

@@ -12,6 +12,7 @@ if ($role !== 'admin') {
     header("Location: ../error403.html");
     exit();
 }
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +66,7 @@ if ($role !== 'admin') {
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h4>Users</h4>
-                            <a href="create.php?id=<?= $id ?>" class="btn btn-success">Create</a>
+                            <a href="create.php" class="btn btn-success">Create</a>
                         </div>
 
                         <div class="card-body">
@@ -97,10 +98,10 @@ if ($role !== 'admin') {
                                                 <td class="col-2"><?= htmlspecialchars($row['username']); ?></td>
                                                 <td class="col-2"><?= htmlspecialchars($row['password']); ?></td>
                                                 <td class="col-2"><?= htmlspecialchars($row['kelas']); ?></td>
-                                                <td class="col-2">
-                                                    <a href="edit.php?role=<?= $row['role']; ?>&id=<?= $row['id']; ?>"
-                                                        class="btn btn-warning">Edit</a>
-                                                    <a href="delete.php?role=<?= $row['role']; ?>&id=<?= $row['id']; ?>"
+                                                <td class="col-auto d-flex gap-2">
+                                                    <a href="update.php?role=<?= $row['role']; ?>&id=<?= $row['id']; ?>"
+                                                        class="btn btn-warning">Update</a>
+                                                    <a href="../src/php/deleteusers.php?role=<?= $row['role']; ?>&id=<?= $row['id']; ?>"
                                                         class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
