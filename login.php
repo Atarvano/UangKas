@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (isset($_SESSION['role'])) {
+  if ($_SESSION['role'] === 'siswa') {
+    header("Location: dashboard/history.php");
+  } else {
+    header("Location: dashboard/index.php");
+  }
+  exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

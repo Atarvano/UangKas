@@ -15,9 +15,9 @@
         <div class="sidebar-header position-relative">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo w-100 h-100">
-                    <a href="index.html">
-                        <img src="../src/img/icon.png" alt="Logo" class="w-50 h-100" />
-                    </a>
+
+                    <img src="../src/img/icon.png" alt="Logo" class="w-50 h-100" />
+
                 </div>
                 <div class="theme-toggle d-flex gap-2 align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -52,11 +52,26 @@
         <div class="sidebar-menu">
             <ul class="menu">
 
-                <?php if (($_SESSION['role']) != 'siswa') { ?>
+                <?php if (($_SESSION['role']) != 'siswa' and ($_SESSION['role']) != 'admin') { ?>
                     <li class="sidebar-item active">
                         <a href="index.php" class="sidebar-link">
                             <i class="bi bi-grid-fill"></i>
                             <span>Dashboard</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php if (($_SESSION['role']) == 'admin') { ?>
+                    <li class="sidebar-item active">
+                        <a href="admin.php" class="sidebar-link">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Admin</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="kelas.php" class="sidebar-link">
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Kelas</span>
                         </a>
                     </li>
                 <?php } ?>

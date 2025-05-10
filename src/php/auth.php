@@ -23,11 +23,15 @@ $sql = "
      FROM bendahara b
      INNER JOIN kelas k ON k.id_kelas = b.id_kelas
      WHERE b.username = ?)
+     UNION
+     (SELECT 'admin', id_admin, NULL AS nama, a.username, a.password, NULL AS id_kelas, NULL AS nama_kelas
+     FROM admin a
+     WHERE a.username = ?)
     LIMIT 1
 ";
 
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, 'sss', $username, $username, $username);
+mysqli_stmt_bind_param($stmt, 'ssss', $username, $username, $username, $username);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
@@ -35,6 +39,7 @@ if ($row = mysqli_fetch_assoc($result)) {
     if ($password === $row['password']) {
         $_SESSION = [
             'role' => $row['role'],
+
             'id_user' => $row['id_user'],
             'nama' => $row['nama'],
             'id_kelas' => $row['id_kelas'],
@@ -42,6 +47,8 @@ if ($row = mysqli_fetch_assoc($result)) {
         ];
         if ($row['role'] === 'siswa') {
             header("Location: ../../dashboard/history.php");
+        } elseif ($row['role'] === 'admin') {
+            header("location: ../../dashboard/admin.php");
         } else {
             header("Location: ../../dashboard/index.php");
         }
