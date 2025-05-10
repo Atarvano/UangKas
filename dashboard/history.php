@@ -125,7 +125,7 @@ if ($role === 'siswa') {
                                                 ): ?>
                                                     <td class="col-auto d-flex gap-2">
                                                         <a href="../src/php/delete.php?id=<?= $row['id_transaksi']; ?>"
-                                                            class="btn btn-danger">Delete</a>
+                                                            class="btn btn-warning">Delete</a>
                                                         <a href="update.php?id=<?= $row['id_transaksi']; ?>"
                                                             class="btn btn-danger">Update</a>
                                                     </td>

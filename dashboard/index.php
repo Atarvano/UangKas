@@ -8,7 +8,7 @@ if (!isset($role)) {
   exit();
 }
 
-if ($role == 'siswa') {
+if ($role == 'siswa' || $role == 'admin') {
   header("Location: ../error403.html");
   exit();
 }
