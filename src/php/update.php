@@ -9,17 +9,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jumlah = $_POST['dibayar-column'];
     $bendahara = $_SESSION['id_user'];
 
-    // Prepared statement untuk keamanan
-    $stmt = $conn->prepare("UPDATE uang_kas_kelas 
-                            SET tanggal = ?, jumlah = ? 
-                            WHERE id_transaksi = ?");
-    $stmt->bind_param("ssi", $tanggal, $jumlah, $id);
+    // Menggunakan procedural style
+    $query = "UPDATE uang_kas_kelas 
+              SET tanggal = '$tanggal', jumlah = '$jumlah' 
+              WHERE id_transaksi = '$id'";
 
-    if ($stmt->execute()) {
+    if (mysqli_query($conn, $query)) {
         header("Location: ../../dashboard/index.php?message=success");
     } else {
         header("Location: ../../dashboard/index.php?message=error");
     }
-    $stmt->close();
 }
 ?>
