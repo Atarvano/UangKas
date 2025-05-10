@@ -62,7 +62,7 @@
                 <?php } ?>
 
                 <?php if (($_SESSION['role']) == 'admin') { ?>
-                    <li class="sidebar-item active">
+                    <li class="sidebar-item ">
                         <a href="admin.php" class="sidebar-link">
                             <i class="bi bi-grid-fill"></i>
                             <span>Admin</span>
