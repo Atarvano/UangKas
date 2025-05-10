@@ -2,23 +2,60 @@
 include '../src/php/conn.php';
 session_start();
 
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'bendahara') {
+if (!isset($_SESSION['role']) || ($_SESSION['role'] != 'bendahara' && $_SESSION['role'] != 'admin')) {
     header('Location: ../error403.html');
     exit;
 }
-$idkelas = $_SESSION['id_kelas'];
-$id = $_GET['id'];
+$idkelas = $_SESSION['id_kelas'] ?? null;
 
 
-$sql = "SELECT * FROM uang_kas_kelas 
-        WHERE id_transaksi = $id AND id_kelas = $idkelas";
-$result = mysqli_query($conn, $sql);
+if ($_SESSION['role'] === 'bendahara') {
+    $id = $_GET['id'];
 
-$row = mysqli_fetch_assoc($result);
-if (!$row) {
-    header("Location: index.php?message=error");
 
+    $sql = "SELECT * FROM uang_kas_kelas 
+     WHERE id_transaksi = $id AND id_kelas = $idkelas";
+    $result = mysqli_query($conn, $sql);
+
+    $row = mysqli_fetch_assoc($result);
+    if (!$row) {
+        header("Location: index.php?message=error");
+
+        exit;
+    }
 }
+
+if ($_SESSION['role'] === 'admin' && !isset($_GET['kelas'])) {
+    $role = $_GET['role'];
+    $id = $_GET['id'];
+    switch ($role) {
+        case 'siswa':
+            $sql = "SELECT * FROM siswa WHERE id_siswa = $iduser";
+            break;
+        case 'guru':
+            $sql = "SELECT * FROM guru WHERE id_guru = $iduser";
+            break;
+        case 'bendahara':
+            $sql = "SELECT * FROM bendahara WHERE id_bendahara = $iduser";
+            break;
+    }
+
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+
+
+
+} else if ($_SESSION['role'] === 'admin' && isset($_GET['kelas'])) {
+    $kelas = $_GET['kelas'];
+    $sql = "SELECT * FROM kelas WHERE id_kelas = $kelas";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    if (!$row) {
+        header("Location: index.php?message=error");
+        exit;
+    }
+}
+
 
 ?>
 
@@ -36,94 +73,16 @@ if (!$row) {
 
 
 <body>
-    <?php include '../src/assets/sidebar.php'; ?>
-    <div id="app">
-        <div id="main">
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header>
+    <?php include '../src/assets/sidebar.php';
+    if ($_SESSION['role'] === 'bendahara') {
+        include '../src/assets/updatehistory.php';
+    } else if ($_SESSION['role'] === 'admin' && !isset($_GET['kelas'])) {
+        include '../src/assets/updateusers.php';
+    } else if ($_SESSION['role'] === 'admin' && isset($_GET['kelas'])) {
+        include '../src/assets/updatekelas.php';
+    }
+    ?>
 
-            <div class="page-heading">
-                <div class="page-title">
-                    <div class="row">
-                        <div class="c>
-                        </div>
-                        <div class=" col-12 col-md-6 order-md-2 order-first">
-                            <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="index.html">Dashboard</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        History
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">
-                                        Update
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-
-
-                <section id="multiple-column-form">
-                    <div class="row match-height">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title">Multiple Column</h4>
-                                </div>
-                                <div class="card-content">
-                                    <div class="card-body">
-                                        <form class="form" action="../src/php/update.php?id=<?= $id ?>" method="POST"
-                                            data-parsley-validate>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label for="date-column" class="form-label">Date</label>
-                                                        <input type="date" id="date-column"
-                                                            value="<?= $row['tanggal'] ?>" class="form-control"
-                                                            placeholder="Select date.." name="date-column" required
-                                                            data-parsley-required="true" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label for="dibayar-column" class="form-label">Dibayar</label>
-                                                        <input type="number" id="dibayar-column" class="form-control"
-                                                            placeholder="Jumlah Dibayar" value="<?= $row['jumlah'] ?>"
-                                                            name="dibayar-column" data-parsley-required="true"
-                                                            required />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-12 d-flex justify-content-end">
-                                                    <button type="submit" class="btn btn-primary me-1 mb-1">
-                                                        Submit
-                                                    </button>
-                                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">
-                                                        <a href="index.php">Back</a>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-
-        </div>
-    </div>
     <script src="../src/js/bundle.js"></script>
 </body>
 
