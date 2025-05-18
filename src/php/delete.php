@@ -2,7 +2,7 @@
 session_start();
 include 'conn.php';
 
-// Cek apakah pengguna adalah bendahara
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'bendahara') {
     header('Location: ../error403.html');
     exit;
@@ -25,4 +25,6 @@ if ($result) {
 } else {
     header("Location: ../../dashboard/index.php?message=error");
 }
+
+
 ?>

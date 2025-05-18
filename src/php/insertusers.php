@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($role === 'siswa') {
         $sql = "INSERT INTO siswa (username, password, nama, kelas) VALUES ('$username', '$password', '$nama', '$id_kelas')";
     } elseif ($role === 'guru') {
-        $sql = "INSERT INTO guru (username, password, nama, id_kelas) VALUES ('$username', '$password', '$nama' ', '$id_kelas')";
+        $sql = "INSERT INTO guru (username, password, nama, id_kelas) VALUES ('$username', '$password', '$nama', '$id_kelas')";
+
     } elseif ($role === 'bendahara') {
         $sql = "INSERT INTO bendahara (username, password, nama, id_kelas) VALUES ('$username', '$password', '$nama', '$id_kelas')";
     } else {
