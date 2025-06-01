@@ -23,6 +23,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
     <link rel="shortcut icon" href="../src/img/icon.png" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -117,6 +118,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
 
     <script src="../src/js/bundle.js"></script>
+    <?php include '../src/assets/success.php'; ?>
 </body>
 
 </html>

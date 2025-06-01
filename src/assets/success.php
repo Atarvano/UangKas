@@ -16,4 +16,13 @@
             confirmButtonText: 'Coba Lagi',
         });
     </script>
+<?php elseif (isset($_GET['message']) && $_GET['message'] === 'username_exists'): ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'Username sudah digunakan.',
+            confirmButtonText: 'Coba Lagi',
+        });
+    </script>
 <?php endif; ?>
