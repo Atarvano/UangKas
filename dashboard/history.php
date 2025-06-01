@@ -61,13 +61,25 @@ if ($role === 'siswa') {
 
         <div class="card mt-4">
             <div class="card-body py-4 px-4 d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center mb-3">
-                    <div class="avatar avatar-xl">
-                        <img src="./assets/compiled/jpg/1.jpg" alt="Face 1" />
+                <div class="d-flex align-items-center mb-3 justify-content-between w-100">
+                    <div class="d-flex align-items-center">
+                        <div class="avatar avatar-xl">
+                            <img src="./assets/compiled/jpg/1.jpg" alt="Face 1" />
+                        </div>
+                        <div class="ms-3 name">
+                            <h5 class="font-bold mb-0"><?= htmlspecialchars($nama); ?></h5>
+                            <h6 class="text-muted mb-0"><?= htmlspecialchars($role); ?></h6>
+                        </div>
                     </div>
-                    <div class="ms-3 name">
-                        <h5 class="font-bold"><?= htmlspecialchars($nama); ?></h5>
-                        <h6 class="text-muted mb-0"><?= htmlspecialchars($role); ?></h6>
+                    <div class="total ms-4">
+                        <?php
+                        include '../src/php/conn.php';
+                        $sql = "SELECT SUM(jumlah) AS total_jumlah FROM uang_kas_kelas WHERE id_siswa = $id";
+                        $result = mysqli_query($conn, $sql);
+                        $row = mysqli_fetch_assoc($result);
+                        $total_jumlah = $row['total_jumlah'];
+                        ?>
+                        <h6 class="text-muted mb-0">Total: Rp <?= number_format($total_jumlah) ?></h6>
                     </div>
                 </div>
             </div>

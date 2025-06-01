@@ -64,43 +64,58 @@ $kelas = $_SESSION['nama_kelas'];
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4><?= $kelas ?></h4>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover table-lg">
-                  <thead>
-                    <tr>
-                      <th>Nama</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    include '../src/php/conn.php';
-                    $sql = "SELECT * FROM siswa WHERE kelas = (SELECT id_kelas FROM kelas WHERE nama_kelas = '$kelas')";
-                    $result = mysqli_query($conn, $sql);
-                    while ($row = mysqli_fetch_assoc($result)) {
-                      ?>
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Daftar Siswa Kelas <?= $kelas ?></h4>
+                <div>
+                  <?php
+                  include '../src/php/conn.php';
+                  $sql = "SELECT SUM(jumlah) as total FROM uang_kas_kelas WHERE id_kelas = $_SESSION[id_kelas]";
+                  $stmt = $conn->prepare($sql);
+                  $stmt->execute();
+                  $result = $stmt->get_result();
+                  $row = $result->fetch_assoc();
+                  $total_siswa = $row['total'];
+                  ?>
+                  <h4>Total: Rp <?= number_format($total_siswa) ?></h4>
+                </div>
+
+
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-hover table-lg">
+                    <thead>
                       <tr>
-                        <td class="col-5">
-                          <p class="font-bold mb-0"><?= $row['nama'] ?></p>
-                        </td>
-                        <td class="col-3">
-                          <p class="mb-0">
-                            <a href="history.php?id=<?= $row['id_siswa'] ?>" class="btn btn-primary">History</a>
-                          </p>
-                        </td>
-
+                        <th>Nama</th>
+                        <th>Action</th>
                       </tr>
-                    <?php } ?>
+                    </thead>
+                    <tbody>
+                      <?php
+                      include '../src/php/conn.php';
+                      $sql = "SELECT * FROM siswa WHERE kelas = (SELECT id_kelas FROM kelas WHERE nama_kelas = '$kelas')";
+                      $result = mysqli_query($conn, $sql);
+                      while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                        <tr>
+                          <td class="col-5">
+                            <p class="font-bold mb-0"><?= $row['nama'] ?></p>
+                          </td>
+                          <td class="col-3">
+                            <p class="mb-0">
+                              <a href="history.php?id=<?= $row['id_siswa'] ?>" class="btn btn-primary">History</a>
+                            </p>
+                          </td>
 
-                  </tbody>
-                </table>
+                        </tr>
+                      <?php } ?>
+
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-        </div>
       </section>
     </div>
   </div>
