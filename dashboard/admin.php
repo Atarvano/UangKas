@@ -40,7 +40,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.html">Dashboard</a>
+                        <a href="index.php">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">Admin</li>
                 </ol>
@@ -50,9 +50,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="card mt-4">
             <div class="card-body py-4 px-4 d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center mb-3">
-                    <div class="avatar avatar-xl">
-                        <img src="./assets/compiled/jpg/1.jpg" alt="Face 1" />
-                    </div>
                     <div class="ms-3 name">
                         <h5 class="font-bold">Admin</h5>
                         <h6 class="text-muted mb-0"><?= htmlspecialchars($role); ?></h6>
@@ -115,6 +112,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </div>
             </section>
         </div>
+        <?php include '../src/assets/footer.php'; ?>
+    </div>
+
     </div>
 
     <script src="../src/js/bundle.js"></script>

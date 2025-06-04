@@ -48,9 +48,6 @@ $kelas = $_SESSION['nama_kelas'];
     <div class="card mt-4">
       <div class="card-body py-4 px-4 d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center mb-3">
-          <div class="avatar avatar-xl">
-            <img src="../src/img/yoonaa.jpeg" alt="Face 1 " class="img-fluid" />
-          </div>
           <div class="ms-3 name">
             <h5 class="font-bold"><?= $nama ?> </h5>
             <h6 class="text-muted mb-0"><?= $role ?></h6>
@@ -118,6 +115,7 @@ $kelas = $_SESSION['nama_kelas'];
           </div>
       </section>
     </div>
+    <?php include '../src/assets/footer.php'; ?>
   </div>
 
 
